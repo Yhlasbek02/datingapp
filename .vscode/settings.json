@@ -1,0 +1,10 @@
+{
+    "azureFunctions.deploySubpath": "api",
+    "azureFunctions.postDeployTask": "npm install (functions)",
+    "azureFunctions.projectLanguage": "JavaScript",
+    "azureFunctions.projectRuntime": "~4",
+    "debug.internalConsoleOptions": "neverOpen",
+    "azureFunctions.preDeployTask": "npm prune (functions)",
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/a3f16f27-91ea-4517-ac1f-85b173094156/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/flutternode",
+    "appService.deploySubpath": "."
+}
