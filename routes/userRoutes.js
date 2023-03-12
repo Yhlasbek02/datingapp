@@ -44,6 +44,9 @@ router.use('/uploadimg', checkUserAuth);
 router.use('/makefollow/:id', checkUserAuth);
 router.use('/getfollow', checkUserAuth);
 router.use('/deleteuser', checkUserAuth);
+router.use('/getbasic', checkUserAuth);
+router.use('/getstandart', checkUserAuth);
+router.use('/getvip', checkUserAuth);
 
 
 router.post('/register', UserController.userRegistration);
@@ -111,4 +114,8 @@ router.get('/filtering', userFiltering);
 router.post('/makefollow/:id', UserController.makeFollowing);
 router.get('/getfollow', UserController.getFollowers);
 router.delete('/deleteuser', UserController.deleteUser);
+router.post('/getbasic', UserController.getBasic);
+router.post('/getstandart', UserController.getStandart);
+router.post('/getvip', UserController.getVip);
+router.get('/test', UserController.hello);
 export default router;

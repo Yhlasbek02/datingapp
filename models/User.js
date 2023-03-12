@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
     },
     followers: {type:Array, default:[]},
     followedMe: {type:Array, default:[]},
-    online: {type:Boolean, default:false}
+    online: {type:Boolean, default:false},
 },
 {
     timestamps: true,

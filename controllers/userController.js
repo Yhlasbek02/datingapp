@@ -23,6 +23,10 @@ class UserController {
     static test = async(req, res) => {
         res.send('Hello from server');
     }
+
+    static hello = async(req, res) => {
+        res.send('Hello everyone');
+    }
     
     static userRegistration = async (req, res) => {
         const {email, password, password_confirmation} = req.body;
@@ -332,6 +336,7 @@ class UserController {
            const users = await UserModel.find({
             sex: {$not: {$eq: sex}}
            }).limit(14);
+           
            res.send({users});
            console.log(users);
         } catch (error) {
@@ -343,6 +348,7 @@ class UserController {
         try {
             const id = req.params.id;
             const user = await UserModel.findById(id);
+            let followStatus;
             if(!user) {
                 return res.status(404).json({message: 'user not found'});
             }
@@ -350,9 +356,9 @@ class UserController {
                 await UserModel.updateMany({_id:req.params.id}, {$push: {viewed: req.user._id}})
             }
             if(!user.followers.includes(req.user._id)){
-                res.send({"_id":user._id, "nickname":user.nickname,"email":user.name, "spokenLang":user.spokenLang, "favourites":user.favourites, "viewed":user.viewed, "coins":user.coins, "publicPhotos":user.publicPhotos })
+                res.send({"_id":user._id, "nickname":user.nickname,"email":user.name, "spokenLang":user.spokenLang, "favourites":user.favourites, "viewed":user.viewed, "coins":user.coins, "publicPhotos":user.publicPhotos, "privatePhotos":user.privatePhotos, followStatus:false })
             } else {
-                res.send({"_id":user._id, "nickname":user.nickname,"email":user.name, "spokenLang":user.spokenLang, "favourites":user.favourites, "viewed":user.viewed, "coins":user.coins, "publicPhotos":user.publicPhotos, "privatePhotos":user.privatePhotos })
+                res.send({"_id":user._id, "nickname":user.nickname,"email":user.name, "spokenLang":user.spokenLang, "favourites":user.favourites, "viewed":user.viewed, "coins":user.coins, "publicPhotos":user.publicPhotos, "privatePhotos":user.privatePhotos, followStatus: true })
             }
 
         } catch (error) {
@@ -464,6 +470,39 @@ class UserController {
         } catch (error) {
             console.log(error);
             res.send({message:"unable to get users"})
+        }
+    }
+
+    static getBasic = async(req, res) => {
+        try {
+            const basicCoin = 50;
+            await UserModel.findByIdAndUpdate(req.user._id, {$inc: {coins: basicCoin}});
+            res.send({status:true, message: "50 coins added"});
+        } catch (error) {
+            console.log(error);
+            res.send({status:false, message: "Coins wasn't added"})
+        }
+    }
+
+    static getStandart = async(req, res) => {
+        try {
+            const basicCoin = 150;
+            await UserModel.findByIdAndUpdate(req.user._id, {$inc: {coins: basicCoin}});
+            res.send({status:true, message: "150 coins added"});
+        } catch (error) {
+            console.log(error);
+            res.send({status:false, message: "Coins wasn't added"})
+        }
+    }
+
+    static getVip = async(req, res) => {
+        try {
+            const basicCoin = 250;
+            await UserModel.findByIdAndUpdate(req.user._id, {$inc: {coins: basicCoin}});
+            res.send({status:true, message: "250 coins added"});
+        } catch (error) {
+            console.log(error);
+            res.send({status:false, message: "Coins wasn't added"})
         }
     }
 };
